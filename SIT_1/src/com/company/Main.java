@@ -1,3 +1,4 @@
+//JS
 package com.company;
 
 import java.io.BufferedReader;
@@ -9,21 +10,21 @@ import java.net.Socket;
 
 public class Main {
 
-    private static final int PORT = 13000; // Заданный порт
+    private static final int PORT = 13000; // Г‡Г Г¤Г Г­Г­Г»Г© ГЇГ®Г°ГІ
 
     public static void main(String[] args) {
         try (ServerSocket serverSocket = new ServerSocket(PORT)) {
-            System.out.println("TCP сервер запущен с портом " + PORT);
+            System.out.println("TCP Г±ГҐГ°ГўГҐГ° Г§Г ГЇГіГ№ГҐГ­ Г± ГЇГ®Г°ГІГ®Г¬ " + PORT);
 
             while (true) {
-                Socket clientSocket = serverSocket.accept(); // Принимаем входящее соединение
-                System.out.println("Клиент присоединился: " + clientSocket.getInetAddress().getHostAddress());
+                Socket clientSocket = serverSocket.accept(); // ГЏГ°ГЁГ­ГЁГ¬Г ГҐГ¬ ГўГµГ®Г¤ГїГ№ГҐГҐ Г±Г®ГҐГ¤ГЁГ­ГҐГ­ГЁГҐ
+                System.out.println("ГЉГ«ГЁГҐГ­ГІ ГЇГ°ГЁГ±Г®ГҐГ¤ГЁГ­ГЁГ«Г±Гї: " + clientSocket.getInetAddress().getHostAddress());
 
-                // Создаем и запускаем новый поток для каждого клиента
+                // Г‘Г®Г§Г¤Г ГҐГ¬ ГЁ Г§Г ГЇГіГ±ГЄГ ГҐГ¬ Г­Г®ГўГ»Г© ГЇГ®ГІГ®ГЄ Г¤Г«Гї ГЄГ Г¦Г¤Г®ГЈГ® ГЄГ«ГЁГҐГ­ГІГ 
                 new Thread(() -> handleClient(clientSocket)).start();
             }
         } catch (IOException e) {
-            System.err.println("Ошибка подключения: " + e.getMessage());
+            System.err.println("ГЋГёГЁГЎГЄГ  ГЇГ®Г¤ГЄГ«ГѕГ·ГҐГ­ГЁГї: " + e.getMessage());
         }
     }
 
@@ -34,24 +35,24 @@ public class Main {
         ) {
             String inputLine;
             while ((inputLine = in.readLine()) != null) {
-                System.out.println("Получено от клиента: " + inputLine);
+                System.out.println("ГЏГ®Г«ГіГ·ГҐГ­Г® Г®ГІ ГЄГ«ГЁГҐГ­ГІГ : " + inputLine);
 
                 if ("hello".equalsIgnoreCase(inputLine)) {
                     out.println("Hello, Client!");
                 } else if ("exit".equalsIgnoreCase(inputLine)) {
-                    System.out.println("Клиент отсоединился: " + clientSocket.getInetAddress().getHostAddress());
-                    break; // Закрываем соединение с клиентом
+                    System.out.println("ГЉГ«ГЁГҐГ­ГІ Г®ГІГ±Г®ГҐГ¤ГЁГ­ГЁГ«Г±Гї: " + clientSocket.getInetAddress().getHostAddress());
+                    break; // Г‡Г ГЄГ°Г»ГўГ ГҐГ¬ Г±Г®ГҐГ¤ГЁГ­ГҐГ­ГЁГҐ Г± ГЄГ«ГЁГҐГ­ГІГ®Г¬
                 } else {
-                    out.println("Неизвестная команда");
+                    out.println("ГЌГҐГЁГ§ГўГҐГ±ГІГ­Г Гї ГЄГ®Г¬Г Г­Г¤Г ");
                 }
             }
         } catch (IOException e) {
-            System.err.println("Ошибка обработки при подключении: " + e.getMessage());
+            System.err.println("ГЋГёГЁГЎГЄГ  Г®ГЎГ°Г ГЎГ®ГІГЄГЁ ГЇГ°ГЁ ГЇГ®Г¤ГЄГ«ГѕГ·ГҐГ­ГЁГЁ: " + e.getMessage());
         } finally {
             try {
-                clientSocket.close(); // Закрываем сокет (если не было закрыто внутри handle)
+                clientSocket.close(); // Г‡Г ГЄГ°Г»ГўГ ГҐГ¬ Г±Г®ГЄГҐГІ (ГҐГ±Г«ГЁ Г­ГҐ ГЎГ»Г«Г® Г§Г ГЄГ°Г»ГІГ® ГўГ­ГіГІГ°ГЁ handle)
             } catch (IOException e) {
-                System.err.println("Ошибка при закрытии клиентского сокета: " + e.getMessage());
+                System.err.println("ГЋГёГЁГЎГЄГ  ГЇГ°ГЁ Г§Г ГЄГ°Г»ГІГЁГЁ ГЄГ«ГЁГҐГ­ГІГ±ГЄГ®ГЈГ® Г±Г®ГЄГҐГІГ : " + e.getMessage());
             }
         }
     }
